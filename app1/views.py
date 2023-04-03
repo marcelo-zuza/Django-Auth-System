@@ -16,13 +16,22 @@ class IndexView(TemplateView):
 
 class CustomUserFormView(CreateView):
     form_class = CustomUserForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('home')
     template_name = 'registration.html'
 
 
 class CustomUserLoginView(LoginView):
     template_name = 'login.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('home')
+
+
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['user'] = CustomUser.objects.all()
+        return context
 
 
 
